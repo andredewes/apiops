@@ -406,7 +406,7 @@ public static class ApiModule
     public static async ValueTask DeleteAll(this ApisUri uri, HttpPipeline pipeline, CancellationToken cancellationToken) =>
         await uri.ListNames(pipeline, cancellationToken)
                  .GroupBy(ApiName.GetRootName)
-                 .IterParallel(async group => await ApiUri.From(group.Key, uri.ServiceUri)
+                 .Iter(async group => await ApiUri.From(group.Key, uri.ServiceUri)
                                                           .DeleteAllRevisions(pipeline, cancellationToken),
                                cancellationToken);
 
